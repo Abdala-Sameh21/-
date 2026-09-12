@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>رحلتنا معاً</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="welcomeScreen" class="welcome-overlay">
+      <div class="welcome-content">
+        <p id="subText" class="fade-text-sub">حاجه كده علي ما قسم.</p>
+        
+        <!-- حقل إدخال كلمة المرور -->
+        <input 
+          type="text" 
+          id="passInput" 
+          placeholder="كلمه السر ي فرس..." 
+          onkeypress="checkKey(event)"
+          style="padding: 10px 15px; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.4); background: rgba(255, 255, 255, 0.15); color: #fff; outline: none; text-align: center; margin-bottom: 15px; width: 220px; font-family: 'Cairo', sans-serif; font-size: 16px;"
+        />
+        
+        <button class="btn-open" onclick="enterWebsite()">
+   يلا بينااا
+        </button>
+      </div>
+    </div>
+
+    <div class="bg-fixed"></div>
+    <div class="star-overlay"></div>
+
+    <main id="mainContent" class="hidden-content">
+      <section class="hero active">
+        <div class="hero-content">
+          <h1>بقالنا مع بعض</h1>
+          <p class="subtitle">
+            كل ثانية بتمر بدمنك اكتر من اللي قبلها.
+          </p>
+
+          <div class="timer-wrapper">
+            <div class="time-segment">
+              <span id="days">00</span>
+              <span class="label">يوم</span>
+            </div>
+            <div class="separator">:</div>
+            <div class="time-segment">
+              <span id="hours">00</span>
+              <span class="label">ساعة</span>
+            </div>
+            <div class="separator">:</div>
+            <div class="time-segment">
+              <span id="minutes">00</span>
+              <span class="label">دقيقة</span>
+            </div>
+            <div class="separator">:</div>
+            <div class="time-segment">
+              <span id="seconds">00</span>
+              <span class="label">ثانية</span>
+            </div>
+          </div>
+
+          <button
+            onclick="scrollToSection('playlist')"
+            class="scroll-indicator"
+            aria-label="Scroll Down"
+          >
+            <i class="fas fa-arrow-down"></i>
+          </button>
+        </div>
+      </section>
+
+      <section id="stories" class="section">
+        <div class="section-header reveal">
+          <h2>تفاصيلنا</h2>
+          <p>
+            من "عشره جنيه جديده"، إلى "روحق قلبي وحب عمري " ربنا يخليكي ليا يارب.
+          </p>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline-box left reveal">
+            <div class="date-badge">10 يوليو 2022</div>
+            <div class="box-content">
+              <h3><i class="fas fa-comments"></i> أول رسالة</h3>
+              <p>
+                بدأت بـ رد بسيط عن العشره جنيه الجديده . بس مكنتش اعرف ان رساله منك ف يوم زي ده هتكون سبب بداية لأجمل سيناريو حضره القدر ليا.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-box right reveal">
+            <div class="date-badge">10 اغسطس 2025</div>
+            <div class="box-content">
+              <h3><i class="fas fa-coffee"></i> خدت رقمك </h3>
+              <p>
+                كان اول يوم اخد فيه رقمك بعد هزار وضحك وسهر وحب ومحاولات وكل حاجه وخدت رقمك واتنقلنا من انستا ل واتساب لتكمله اجمد قصه حب مع الفرس.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-box left reveal">
+            <div class="date-badge">5 يوليو 2025</div>
+            <div class="box-content">
+              <h3><i class="fas fa-heart"></i> قرينا فاتحه</h3>
+              <p>
+                مبقيناش صحاب بس وكانت اول خطوه صح الواحد ياخدها ف حياته ويطلع فيها مرضي وكسبان اني خدتك ليا وبقينا شخص واحد من ساعتها وادمنتك.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-box right reveal">
+            <div class="date-badge">16 فبراير 2026</div>
+            <div class="box-content">
+              <h3><i class="fas fa-moon"></i> جبنا الدهب</h3>
+              <p>
+                في تلك الليله لقد فعلتها وجبت الدهب ومبقيناش مجرد قرايه فاتحه لا بقينا مخطوبييين و يااا دبله الخطوووبه عقبالنااا كلناااا تيراااا راااا بحبك يبت
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-box right reveal">
+            <div class="date-badge">12 سبتمبر 2026</div>
+            <div class="box-content">
+              <h3><i class="fas fa-gift"></i> نكبر معاً</h3>
+              <p>
+                مكملييين لهذه اللحظه وهذا اليوم ولاكن في تلك هذه اللحظه احب ان اقول لكي اناااا بدمن امك ي بتتتت 😂♥️♥️♥️🫂.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-header reveal">
+          <h2>أجمل اللحظات</h2>
+        </div>
+        <div class="gallery-container reveal">
+          <div class="polaroid rotate-left">
+            <img
+              src="https://i.ibb.co/tMmDX8MD/IMG-5409.jpg"
+              alt="صورة 1"
+            />
+            <div class="caption">قرايه فاتحتنا ♥️🫂</div>
+          </div>
+          <div class="polaroid rotate-right">
+            <img
+              src="https://i.ibb.co/XftDVhdz/BAB6-FAAF-A6-AD-49-BE-85-D2-6233-B4-E8-A25-C.jpg" alt="BAB6-FAAF-A6-AD-49-BE-85-D2-6233-B4-E8-A25-C"
+              alt="صورة 2"
+            />
+            <div class="caption">خطوبتنا ♥️🫂</div>
+          </div>
+          <div class="polaroid rotate-left">
+            <img
+              src="https://i.ibb.co/pr3Pfc6V/712ea0c7-9b0e-47d8-bf80-b633998f944b.jpg" alt="712ea0c7-9b0e-47d8-bf80-b633998f944b"
+              alt="صورة 3"
+            />
+            <div class="caption">4 سنين وشهرين و يومين ♥️🫂</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section closing-section reveal">
+        <div class="closing-content">
+          <h2 class="gradient-text-big">
+            كل ذكرياتنا<br />محفوظة هنا،<br /><span
+              class="highlight-pink"
+              >إلى الأبد</span
+            >
+          </h2>
+
+          <div class="glow-box">
+            <i
+              class="fas fa-heart heart-beat"
+              id="loveIcon"
+              onclick="createHeartShower()"
+            ></i>
+            <p>
+              شكراً لأنكِ جزء من حياتي. كل ثانية معكِ هي هدية لا تُقدّر بثمن.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <p>صُنع بكل حب، من أجلكِ.</p>
+      </footer>
+    </main>
+
+    <div class="music-floater" id="playerBar">
+      <div class="floater-info">
+        <div class="equalizer"><span></span><span></span><span></span></div>
+        <span id="currentSongTitle" class="song-title">اختر أغنية...</span>
+      </div>
+      <button
+        onclick="toggleMusic()"
+        class="btn-control"
+        aria-label="Play Music"
+      >
+        <i class="fas fa-play" id="mainPlayIcon"></i>
+      </button>
+    </div>
+
+    <audio id="myAudio" loop>
+      <source src="myAudio/lagu-kotainitaksamatanpamu.mp3" type="audio/mpeg" />
+    </audio>
+
+    <script src="script.js"></script>
+  </body>
+</html>

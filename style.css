@@ -1,0 +1,373 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
+
+:root {
+  --bg-deep: #fdf2f4;
+  --primary-pink: #d94b68;
+  --primary-purple: #8b3a62;
+  --text-dark: #4a1525;
+  --text-muted: #723847;
+  --glass-bg: #ffffff;
+  --glass-border: #f2c2ce;
+  --font-main: "Cairo", sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-deep);
+  color: var(--text-dark);
+  font-family: var(--font-main);
+  overflow-x: hidden;
+}
+
+/* خلفية الصفحة الثانية */
+.bg-fixed {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at top, #fff5f7 0%, #fce4ec 40%, #fdf2f4 100%);
+  z-index: -2;
+}
+
+.star-overlay {
+  position: fixed;
+  inset: 0;
+  background-image: url("https://www.transparenttextures.com/patterns/stardust.png");
+  opacity: 0.3;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* شاشة الدخول */
+.welcome-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100vh;
+  background-image: url("image/welcome-bg.png");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.8s ease;
+}
+
+.welcome-content {
+  text-align: center;
+  padding: 20px;
+}
+
+.fade-text-sub {
+  color: #723847;
+  margin-bottom: 25px;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.btn-open {
+  padding: 12px 40px;
+  background: linear-gradient(135deg, #d94b68, #a8325e);
+  border: none;
+  border-radius: 50px;
+  color: white;
+  font-family: var(--font-main);
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(168, 50, 94, 0.3);
+  transition: transform 0.2s;
+}
+
+.btn-open:hover {
+  transform: scale(1.05);
+}
+
+.hidden-content {
+  display: none;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+.show-content {
+  display: block;
+  opacity: 1;
+}
+
+/* --- حل الفراغ العلوي وضبط الهيرو --- */
+.hero {
+  min-height: auto;
+  padding-top: 35px; /* رفع المحتوى للأعلى وتعديل الفراغ */
+  padding-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: #6b1d31; /* لون داكن وبارز */
+  margin-bottom: 5px;
+  font-family: var(--font-main);
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: var(--text-muted);
+  margin-bottom: 25px;
+  font-weight: 600;
+}
+
+/* --- تصميم العداد والتنسيق الأوضح --- */
+.timer-wrapper {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 90%;
+  max-width: 380px;
+  background: var(--glass-bg);
+  padding: 16px 10px;
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 10px 25px rgba(107, 29, 49, 0.08);
+  margin: 0 auto;
+}
+
+.time-segment {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.time-segment span:first-child {
+  font-family: var(--font-main);
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: #b82348; /* لون واضح */
+  line-height: 1.2;
+}
+
+.time-segment .label {
+  font-size: 0.8rem;
+  color: #7a3b4c;
+  margin-top: 4px;
+  font-weight: 700;
+}
+
+.separator {
+  font-size: 1.5rem;
+  color: #d94b68;
+  font-weight: bold;
+  margin-top: -15px;
+}
+
+.scroll-indicator {
+  margin-top: 25px;
+  background: none;
+  border: none;
+  color: #b82348;
+  font-size: 1.3rem;
+  animation: bounce 2s infinite;
+  cursor: pointer;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-8px); }
+  60% { transform: translateY(-4px); }
+}
+
+/* بقية الأقسام */
+.section {
+  padding: 50px 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.section-header h2 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #6b1d31;
+  margin-bottom: 10px;
+}
+
+.section-header p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.timeline {
+  position: relative;
+  padding: 10px 0;
+  border-right: 2px solid #f2c2ce;
+  margin-right: 15px;
+}
+
+.timeline-box {
+  position: relative;
+  margin-right: 25px;
+  margin-bottom: 35px;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 15px;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+}
+
+.timeline-box::before {
+  content: "";
+  position: absolute;
+  right: -32px;
+  top: 20px;
+  width: 12px;
+  height: 12px;
+  background: #d94b68;
+  border: 3px solid #ffffff;
+  border-radius: 50%;
+}
+
+.date-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  background: #8b3a62;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 50px;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.box-content h3 {
+  font-size: 1.2rem;
+  color: #6b1d31;
+  margin-bottom: 8px;
+}
+
+.box-content p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.gallery-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.polaroid {
+  background: white;
+  padding: 12px 12px 40px 12px;
+  width: 240px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+.polaroid img {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+}
+
+.caption {
+  color: #6b1d31;
+  text-align: center;
+  margin-top: 10px;
+  font-weight: 700;
+}
+
+.closing-section {
+  text-align: center;
+}
+
+.gradient-text-big {
+  font-size: 2.2rem;
+  color: #6b1d31;
+  margin-bottom: 30px;
+  line-height: 1.4;
+}
+
+.highlight-pink {
+  color: #d94b68;
+}
+
+.glow-box {
+  background: white;
+  padding: 30px 20px;
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 10px 30px rgba(217, 75, 104, 0.1);
+}
+
+.heart-beat {
+  font-size: 2.2rem;
+  color: #d94b68;
+  margin-bottom: 15px;
+}
+
+footer {
+  text-align: center;
+  padding: 30px 20px;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.music-floater {
+  position: fixed;
+  bottom: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ffffff;
+  border: 1px solid #f2c2ce;
+  padding: 10px 20px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  z-index: 999;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  transition: bottom 0.5s ease;
+}
+
+.music-floater.show-player {
+  bottom: 20px;
+}
+
+.song-title {
+  font-size: 0.85rem;
+  color: #6b1d31;
+  font-weight: 700;
+}
+
+.btn-control {
+  background: #d94b68;
+  border: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  color: white;
+  cursor: pointer;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}

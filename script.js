@@ -1,0 +1,250 @@
+const welcomeTexts = [
+  { main: "موقع الذكريات", sub: "المكان الذي نحفظ فيه قصتنا." },
+  { main: "لأجمل الذكريات", sub: "كل اللحظات المميزة محفوظة هنا." },
+  { main: "من أجلي ومن أجلكِ", sub: "شكراً لأنكِ جزء من حياتي." }
+];
+
+let textIndex = 0;
+const mainTextElement = document.getElementById("typingText");
+const subTextElement = document.getElementById("subText");
+const audio = document.getElementById("myAudio");
+const playIcon = document.getElementById("mainPlayIcon");
+const songTitle = document.getElementById("currentSongTitle");
+const playerContainer = document.querySelector(".music-floater");
+
+let currentPlayingKey = null;
+
+const songs = {
+  perfect: { url: "myAudio/lagu-perfect.mp3", title: "Perfect - Ed Sheeran" },
+  thousand: { url: "myAudio/lagu-thousand.mp3", title: "A Thousand Years" },
+  allofme: { url: "myAudio/lagu-allofme.mp3", title: "All of Me - John Legend" }
+};
+
+function changeText() {
+  if (!mainTextElement || !subTextElement) return;
+  mainTextElement.style.opacity = 0;
+  subTextElement.style.opacity = 0;
+
+  setTimeout(() => {
+    textIndex = (textIndex + 1) % welcomeTexts.length;
+    mainTextElement.innerText = welcomeTexts[textIndex].main;
+    subTextElement.innerText = welcomeTexts[textIndex].sub;
+
+    mainTextElement.style.opacity = 1;
+    subTextElement.style.opacity = 1;
+  }, 500);
+}
+
+let textInterval = setInterval(changeText, 3000);
+
+// دالة الدخول والتحقق من كلمة السر
+function enterWebsite() {
+  const inputElement = document.getElementById("passInput");
+  const inputPassword = inputElement ? inputElement.value.trim() : "";
+
+  if (inputPassword === "الفرس") {
+    clearInterval(textInterval);
+
+    const welcome = document.getElementById("welcomeScreen");
+    const main = document.getElementById("mainContent");
+
+    if (welcome) welcome.style.opacity = "0";
+    setTimeout(() => {
+      if (welcome) welcome.style.display = "none";
+      if (main) main.classList.add("show-content");
+      if (audio) {
+        audio.volume = 0.5;
+        audio.play().catch(error => {
+          console.log("Autoplay blocked:", error);
+        });
+      }
+    }, 800);
+  } else if (inputPassword === "") {
+    alert("من فضلك أدخل كلمة السر أولاً!");
+  } else {
+    alert("كلمة السر غير صحيحة، حاول مرة أخرى!");
+  }
+}
+
+// السماح بالضغط على زر Enter للدخول
+function checkKey(event) {
+  if (event.key === "Enter") {
+    enterWebsite();
+  }
+}
+
+/* ===================================================
+   حساب الوقت بناءً على التاريخ 10/07/2022 وتوقيت مصر (GMT+3)
+   =================================================== */
+const startDate = new Date("2022-07-10T00:00:00+03:00").getTime();
+
+function updateTimer() {
+  // الحصول على التوقيت الحالي لجمهورية مصر العربية (GMT+3)
+  const now = new Date();
+  const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+  const egyptNow = utc + (3 * 3600000);
+
+  const distance = egyptNow - startDate;
+
+  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  const daysElem = document.getElementById("days");
+  const hoursElem = document.getElementById("hours");
+  const minutesElem = document.getElementById("minutes");
+  const secondsElem = document.getElementById("seconds");
+
+  if (daysElem) daysElem.innerText = days < 10 ? "0" + days : days;
+  if (hoursElem) hoursElem.innerText = hours < 10 ? "0" + hours : hours;
+  if (minutesElem) minutesElem.innerText = minutes < 10 ? "0" + minutes : minutes;
+  if (secondsElem) secondsElem.innerText = seconds < 10 ? "0" + seconds : seconds;
+}
+
+setInterval(updateTimer, 1000);
+updateTimer(); // تشغيل فوري لتفادي التأخير عند تحميل الصفحة
+
+window.addEventListener("scroll", reveal);
+function reveal() {
+  const reveals = document.querySelectorAll(".reveal");
+  for (let i = 0; i < reveals.length; i++) {
+    const windowHeight = window.innerHeight;
+    const elementTop = reveals[i].getBoundingClientRect().top;
+    const elementVisible = 100;
+    if (elementTop < windowHeight - elementVisible) {
+      reveals[i].classList.add("active");
+    }
+  }
+}
+
+function playSong(key) {
+  const song = songs[key];
+  const playerBar = document.getElementById("playerBar");
+
+  if (currentPlayingKey === key) {
+    if (audio.paused) {
+      audio.play();
+      if (playerBar) playerBar.classList.add("show-player");
+      updatePlayerUI(true, song.title);
+      updateListIcon(key, true);
+    } else {
+      audio.pause();
+      if (playerBar) playerBar.classList.remove("show-player");
+      updatePlayerUI(false, song.title);
+      updateListIcon(key, false);
+    }
+  } else {
+    currentPlayingKey = key;
+    audio.src = song.url;
+    audio.volume = 1.0;
+    audio.play();
+
+    if (playerBar) playerBar.classList.add("show-player");
+    updatePlayerUI(true, song.title);
+
+    resetAllListIcons();
+    updateListIcon(key, true);
+
+    const activeTrack = document.getElementById(`track-${key}`);
+    if (activeTrack) activeTrack.classList.add('playing');
+  }
+}
+
+function toggleMusic() {
+  if (!currentPlayingKey) return;
+
+  const playerBar = document.getElementById("playerBar");
+
+  if (audio.paused) {
+    audio.play();
+    if (playerBar) playerBar.classList.add("show-player");
+    updatePlayerUI(true);
+    updateListIcon(currentPlayingKey, true);
+  } else {
+    audio.pause();
+    if (playerBar) playerBar.classList.remove("show-player");
+    updatePlayerUI(false);
+    updateListIcon(currentPlayingKey, false);
+  }
+}
+
+function updateListIcon(key, isPlaying) {
+  const trackItem = document.getElementById(`track-${key}`);
+  if (trackItem) {
+    const icon = trackItem.querySelector('.track-icon i');
+    if (icon) {
+      if (isPlaying) {
+        icon.classList.remove('fa-play');
+        icon.classList.add('fa-pause');
+      } else {
+        icon.classList.remove('fa-pause');
+        icon.classList.add('fa-play');
+      }
+    }
+  }
+}
+
+function resetAllListIcons() {
+  document.querySelectorAll('.track-item').forEach(item => {
+    item.classList.remove('playing');
+    const icon = item.querySelector('.track-icon i');
+    if (icon) {
+      icon.classList.remove('fa-pause');
+      icon.classList.add('fa-play');
+    }
+  });
+}
+
+function updatePlayerUI(isPlaying, title = null) {
+  if (title && songTitle) songTitle.innerText = title;
+
+  if (playIcon && playerContainer) {
+    if (isPlaying) {
+      playIcon.classList.remove("fa-play");
+      playIcon.classList.add("fa-pause");
+      playerContainer.classList.add("music-playing");
+    } else {
+      playIcon.classList.remove("fa-pause");
+      playIcon.classList.add("fa-play");
+      playerContainer.classList.remove("music-playing");
+    }
+  }
+}
+
+function createHeartShower() {
+  const container = document.body;
+  const colors = ["#ec4899", "#8b5cf6", "#d946ef", "#a855f7"];
+
+  for (let i = 0; i < 30; i++) {
+    const heart = document.createElement("div");
+    heart.classList.add("floating-flower");
+
+    heart.innerHTML = '<i class="fas fa-heart"></i>';
+
+    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+    heart.style.color = randomColor;
+
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (Math.random() * 20 + 15) + "px";
+    heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
+    heart.style.animationDelay = Math.random() + "s";
+
+    container.appendChild(heart);
+
+    setTimeout(() => {
+      heart.remove();
+    }, 6000);
+  }
+
+  if (navigator.vibrate) {
+    navigator.vibrate(100);
+  }
+}
+
+function scrollToSection(id) {
+  const elem = document.getElementById(id);
+  if (elem) {
+    elem.scrollIntoView({ behavior: 'smooth' });
+  }
+}
